@@ -169,7 +169,7 @@ parameters.("fc" + numLayers).Weights = initializeHe([1,numNeurons],numIn);
 parameters.("fc" + numLayers).Bias = initializeZeros([1 1]);
 %
 %%
-numEpochs = 30000;
+numEpochs = 5000;
 miniBatchSize = length(X0);
 
 executionEnvironment = "auto";
