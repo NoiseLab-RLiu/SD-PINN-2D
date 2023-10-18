@@ -138,7 +138,7 @@ end
 %% 
 ds = arrayDatastore([X' Y' T']);
 %% Network parameters
-numLayers = 3;
+numLayers = 5;
 numNeurons = 200;
 sz = [numNeurons 3];
 numIn = numNeurons;
