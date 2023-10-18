@@ -27,13 +27,6 @@ x_onecol = x_lb*dx: dx: x_lb*dx+x_range*dx;
 y_onerow = y_lb*dy: dy: y_lb*dy+y_range*dy;
 t_oneslice = t_lb*dt: dt: t_lb*dt+t_range*dt;
 
-% %t_intoneslice = 0.02:0.005:1.995;
-% t_intoneslice = t_lb*dt: dt: t_lb+t_range*dt;
-% T = [];
-% for i = 1:length(t_intoneslice)
-%     T = [T, t_intoneslice(i)*ones(1,length(x_onecol)*length(y_onerow))];
-% end
-
 Usel = Xn(x_lb:x_lb+x_range, y_lb:y_lb+y_range, t_lb:t_lb+t_range);
 
 % vectorize
@@ -45,19 +38,6 @@ for i_t=1:size(Usel,3)
         end
     end
 end
-% 
-% % test if U0 is correct
-% U0_rec = zeros(30,30,198);
-% for k=1:198
-%     for j=1:30
-%         for i=1:30
-%             U0_rec(i,j,k) = U0(900*(k-1)+30*(j-1)+i);
-%         end
-%     end
-% end
-% U_diff = abs(Usel-U0_rec);
-% diffsum = sum(U_diff(:));
-% % end test
 
 coor_ind_ori = 1:length(y_onerow)*length(x_onecol);
 coor_ind_add = [];
