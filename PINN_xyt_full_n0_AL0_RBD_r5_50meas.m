@@ -89,21 +89,21 @@ M2 = floor((Smpl-1)/size(Usel,2))+1;%y
 M = [M1',M2'];
 
 U0 = [];
-for t=2:199
+for t=t_lb:t_lb+t_range
     for i=1:size(M,1)
         U0 = [U0, Xn(M(i,1),M(i,2),t)];
     end
 end
 
-Urec = nan(30,30,198);
-for i=1:198
-    for j=1:length(M)
-        Urec(M(j,1),M(j,2),i) = U0((i-1)*length(M)+j);
+Urec = nan(size(Usel,1),size(Usel,2),size(Usel,3));
+for i_t=1:size(Usel,3)
+    for i_m=1:length(M)
+        Urec(M(i_m,1),M(i_m,2),i_t) = U0((i_t-1)*length(M)+i_m);
     end
 end
 
 figure
-for i=1:198
+for i=1:size(Usel,3)
     Data_Array = Urec(:,:,i);
     imAlpha=ones(size(Data_Array));
     imAlpha(isnan(Data_Array))=0;
