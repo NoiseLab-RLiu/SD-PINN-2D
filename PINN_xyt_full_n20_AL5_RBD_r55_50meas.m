@@ -133,10 +133,10 @@ rnkAlpha = 5
 mu = 0;
 sigma = 0.1;
 
-parameters.UL1 = initializeGaussian([length(x_onecol),rnk],mu,sigma);%([length(x_onecol),rnk]);
+parameters.UL1 = initializeGaussian([length(x_onecol),rnk],mu,sigma);
 parameters.SVR1 = initializeGaussian([rnk,length(x_onecol)],mu,sigma);
 
-parameters.UL2 = initializeGaussian([length(x_onecol),rnkAlpha],mu,sigma);%([length(x_onecol),rnk]);
+parameters.UL2 = initializeGaussian([length(x_onecol),rnkAlpha],mu,sigma);
 parameters.SVR2 = initializeGaussian([rnkAlpha,length(x_onecol)],mu,sigma);
 
 for layerNumber=2:numLayers-1
