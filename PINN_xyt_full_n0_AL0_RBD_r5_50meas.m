@@ -222,7 +222,7 @@ for epoch = 1:numEpochs
         Y = XYT(2,:);
         T = XYT(3,:);
 
-       [loss,lossF,lossU,loss_s,loss_b,LAM1,gradients,vU,PDEterms] = dlfeval(accfun,parameters,X,Y,T,X0,Y0,T0,U0,lenT,C,Weight,addon,numParams);
+       [loss,lossF,lossU,lossS,lossB,LAM1,gradients,vU,PDEterms] = dlfeval(accfun,parameters,X,Y,T,X0,Y0,T0,U0,lenT,C,Weight,addon,numParams);
 
         % Update the network parameters using the adamupdate function.
         [parameters,averageGrad,averageSqGrad] = adamupdate(parameters,gradients,averageGrad, ...
@@ -236,10 +236,10 @@ for epoch = 1:numEpochs
         LOSS_in(ep_in,2) = lossF_in;
         lossU_in = double(gather(extractdata(lossU)));
         LOSS_in(ep_in,3) = lossU_in;
-        loss_s_in = double(gather(extractdata(loss_s)));
-        LOSS_in(ep_in,4) = loss_s_in;
-        loss_b_in = double(gather(extractdata(loss_b)));
-        LOSS_in(ep_in,5) = loss_b_in;
+        lossS_in = double(gather(extractdata(lossS)));
+        LOSS_in(ep_in,4) = lossS_in;
+        lossB_in = double(gather(extractdata(lossB)));
+        LOSS_in(ep_in,5) = lossB_in;
     end
     epoch
     if(mod(epoch,100)==0)
@@ -253,10 +253,10 @@ for epoch = 1:numEpochs
     LOSS(epoch,2) = lossF;
     lossU = double(gather(extractdata(lossU)));
     LOSS(epoch,3) = lossU;
-    loss_s = double(gather(extractdata(loss_s)));
-    LOSS(epoch,4) = loss_s;
-    loss_b = double(gather(extractdata(loss_b)));
-    LOSS(epoch,5) = loss_b;
+    lossS = double(gather(extractdata(lossS)));
+    LOSS(epoch,4) = lossS;
+    lossB = double(gather(extractdata(lossB)));
+    LOSS(epoch,5) = lossB;
     LOSS(epoch,1:5)
     if(mod(epoch,500)==0 || epoch==5)
         fname = strcat('Saved/',strcat(num2str(epoch),'STD0_RBD_r5.mat'));
