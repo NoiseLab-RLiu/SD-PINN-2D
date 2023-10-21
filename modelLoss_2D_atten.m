@@ -31,7 +31,7 @@ lossF = mse(f, zeroTarget);
 lossS = sum(sum(relu(LAM1)))+sum(sum(relu(-LAM2))); % loss for the sign
 
 linearIndices = sub2ind(size(LAM1), addon(:, 1), addon(:, 2)); % Convert subscript indices to linear indices
-lossB = dlarray(sum((LAM1(linearIndices) + C(linearIndices).^2 ).^2) + sum((LAM2(linearIndices) - alpha(linearIndices)).^2));
+lossB = dlarray(sum((LAM1(linearIndices) + C(linearIndices).^2).^2) + sum((LAM2(linearIndices) - alpha(linearIndices)).^2));
 
 % Calculate lossU. 
 U0Pred = model_2D(parameters,X0,Y0,T0,numParams);
