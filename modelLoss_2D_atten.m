@@ -21,8 +21,8 @@ PDEterms{5} = Uyy;
 PDEterms{6} = Utt;
 
 % Calculate los
-LAM1 = parameters.UL1*parameters.SVR1;
-LAM2 = parameters.UL2*parameters.SVR2;
+LAM1 = parameters.Umat1*parameters.Vmat1;
+LAM2 = parameters.Umat2*parameters.Vmat2;
 f = Utt +repmat(reshape(LAM1,1,size(LAM1,1)*size(LAM1,2)),1,lenT).*(Uxx+Uyy)+repmat(reshape(LAM2,1,size(LAM2,1)*size(LAM2,2)),1,lenT).*Ut; 
 
 zeroTarget = zeros(size(f), "like", f);
