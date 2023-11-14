@@ -112,6 +112,7 @@ Weight.lossB = 10;
 X0 = dlarray(X0,"CB");
 Y0 = dlarray(Y0,"CB");
 T0 = dlarray(T0,"CB");
+X0Y0T0 = [X0;Y0;T0];
 U0 = dlarray(2*(U0-min(U0(:)))*(1/(max(U0(:))-min(U0(:))))-1);
 
 averageGrad = [];
@@ -156,43 +157,26 @@ for epoch = 1:numEpochs
     colRange = reshape(ranges.', [], 1);
 
     XYTcur = XYT(:,colRange);
-    X = XYTcur(1,:);
-    Y = XYTcur(2,:);
-    T = XYTcur(3,:);
     tic
     %reset(mbq);
     iteration = iteration + 1;
     learningRate = initialLearnRate / (1+decayRate*iteration);
     
 
-    [loss,lossF,lossU,lossS,lossB,LAM1,LAM2,gradients,vU,PDEterms] = dlfeval(accfun,parameters,X,Y,T,X0,Y0,T0,U0,numTimes,C,ALPHA,Weight,addon,numParams);
+    [loss,lossF,lossU,lossS,lossB,LAM1,LAM2,gradients] = dlfeval(accfun,parameters,XYTcur,X0Y0T0,U0,numTimes,C,ALPHA,Weight,addon,numParams);
         % Update the network parameters using the adamupdate function.
     [parameters,averageGrad,averageSqGrad] = adamupdate(parameters,gradients,averageGrad, ...
             averageSqGrad,iteration,learningRate);    
     if(mod(epoch,100)==0)
         RECORD{epoch,1} = LAM1;
         RECORD{epoch,2} = LAM2;
-        % If required for debugging, uncomment the following recordings
-        % lines
-%         RECORD{epoch,3} = vU; 
-%         RECORD{epoch,4} = gradients;
-%         RECORD{epoch,5} = PDEterms;
     end
     loss = double(gather(extractdata(loss)));
     LOSS(epoch,1) = loss;
-    % If required for recording detailed losses, uncomment following lines
-%     lossF = double(gather(extractdata(lossF)));
-%     LOSS(epoch,2) = lossF;
-%     lossU = double(gather(extractdata(lossU)));
-%     LOSS(epoch,3) = lossU;
-%     lossS = double(gather(extractdata(lossS)));
-%     LOSS(epoch,4) = lossS;
-%     lossB = double(gather(extractdata(lossB)));
-%     LOSS(epoch,5) = lossB;
-%     LOSS(epoch,1:5)
+
     fprintf('epoch %d: loss = %e\n', epoch, loss);
     if(mod(epoch,1000)==0 || epoch==5)
-        fname = strcat('Saved/',strcat(num2str(epoch),'STD20_RBD_r55_randT1103.mat'));
+        fname = strcat('Saved/',strcat(num2str(epoch),'STD20_RBD_r55_randT1114.mat'));
         save(fname);
     end
     toc
