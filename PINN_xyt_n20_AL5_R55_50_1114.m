@@ -147,7 +147,7 @@ numParams = 2; % 2 PDE parameters -c^2 and alpha to be recovered.
 
 
 
-numTimes = 11; % Size of vector v
+numTimes = 66; % Size of vector v
 
 for epoch = 1:numEpochs
     
