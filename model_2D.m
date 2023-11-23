@@ -1,4 +1,5 @@
-function U = model_2D(parameters,XYT,numParams)
+function U = model_2D(parameters,X,Y,T,numParams)
+XYT = [X;Y;T];
 numLayers = numel(fieldnames(parameters))-2*numParams;
 % First fully connect operation.
 weights = parameters.fc1.Weights;

@@ -1,16 +1,19 @@
-function [loss,lossF,lossU,lossS,lossB,LAM1,LAM2,gradients] = modelLoss_2D_atten(parameters,XYT,X0Y0T0,U0,lenT,C,alpha, Weight,addon,numParams)
+function [loss,lossF,lossU,lossS,lossB,LAM1,LAM2,gradients,debugx,debugy,debug] = modelLoss_2D_atten(parameters,X,Y,T,X0,Y0,T0,U0,lenT,C,alpha, Weight,addon,numParams)
 % % Make predictions with the initial conditions.
-U = model_2D(parameters,XYT,numParams);
+U = model_2D(parameters,X,Y,T,numParams);
 % Calculate derivatives with respect to X and T.
-X = XYT(1,:);
-Y = XYT(2,:);
-T = XYT(3,:);
+% X = XYT(1,:);
+% Y = XYT(2,:);
+% T = XYT(3,:);
 gradientsU = dlgradient(sum(U,"all"),{X,Y,T},EnableHigherDerivatives=true);
 Ut = gradientsU{3};
 %Calculate second-order derivatives with respect to X.
 Uxx = dlgradient(sum(gradientsU{1},"all"),X,EnableHigherDerivatives=true);
 Uyy = dlgradient(sum(gradientsU{2},"all"),Y,EnableHigherDerivatives=true);
 Utt = dlgradient(sum(Ut,"all"),T,EnableHigherDerivatives=true);
+debugy=sum(sum(Uyy));
+debugx = sum(sum(Uxx));
+debug = sum(sum(Utt));
 
 % Calculate los
 LAM1 = parameters.Umat1*parameters.Vmat1;
@@ -26,7 +29,7 @@ linearIndices = sub2ind(size(LAM1), addon(:, 1), addon(:, 2)); % Convert subscri
 lossB = dlarray(sum( ( LAM1(linearIndices) + C(linearIndices).^2 ) .^2) + sum( ( LAM2(linearIndices) - alpha(linearIndices) ) .^2 ) );
 
 % Calculate lossU. 
-U0Pred = model_2D(parameters,X0Y0T0,numParams);
+U0Pred = model_2D(parameters,X0,Y0,T0,numParams);
 lossU = mse(U0Pred, U0);
 
 %Combine losses.
