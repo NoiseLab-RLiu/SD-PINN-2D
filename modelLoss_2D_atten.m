@@ -1,4 +1,4 @@
-function [loss,lossF,lossU,lossS,lossB,LAM1,LAM2,gradients,debugx,debugy,debug] = modelLoss_2D_atten(parameters,X,Y,T,X0,Y0,T0,U0,lenT,C,alpha, Weight,addon,numParams)
+function [loss,lossF,lossU,lossS,lossB,LAM1,LAM2,gradients] = modelLoss_2D_atten(parameters,X,Y,T,X0,Y0,T0,U0,lenT,C,alpha, Weight,addon,numParams)
 % % Make predictions with the initial conditions.
 U = model_2D(parameters,X,Y,T,numParams);
 % Calculate derivatives with respect to X and T.
@@ -8,9 +8,6 @@ Ut = gradientsU{3};
 Uxx = dlgradient(sum(gradientsU{1},"all"),X,EnableHigherDerivatives=true);
 Uyy = dlgradient(sum(gradientsU{2},"all"),Y,EnableHigherDerivatives=true);
 Utt = dlgradient(sum(Ut,"all"),T,EnableHigherDerivatives=true);
-debugy=sum(sum(Uyy));
-debugx = sum(sum(Uxx));
-debug = sum(sum(Utt));
 
 % Calculate los
 LAM1 = parameters.Umat1*parameters.Vmat1;
