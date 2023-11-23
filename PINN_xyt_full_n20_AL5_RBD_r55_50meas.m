@@ -138,8 +138,8 @@ end
 
 %% Start Training
 iteration = 0;
-RECORD = cell(numEpochs,5);
-LOSS = zeros(numEpochs,5);
+RECORD = cell(numEpochs,2);
+LOSS = zeros(numEpochs,1);
 C = c;
 ALPHA = alpha;
 numParams = 2; % 2 PDE parameters -c^2 and alpha to be recovered.
@@ -162,24 +162,10 @@ for epoch = 1:numEpochs
     if(mod(epoch,100)==0)
         RECORD{epoch,1} = LAM1;
         RECORD{epoch,2} = LAM2;
-        % If required for debugging, uncomment the following recordings
-        % lines
-%         RECORD{epoch,3} = vU; 
-%         RECORD{epoch,4} = gradients;
-%         RECORD{epoch,5} = PDEterms;
     end
     loss = double(gather(extractdata(loss)));
     LOSS(epoch,1) = loss;
-    % If required for recording detailed losses, uncomment following lines
-%     lossF = double(gather(extractdata(lossF)));
-%     LOSS(epoch,2) = lossF;
-%     lossU = double(gather(extractdata(lossU)));
-%     LOSS(epoch,3) = lossU;
-%     lossS = double(gather(extractdata(lossS)));
-%     LOSS(epoch,4) = lossS;
-%     lossB = double(gather(extractdata(lossB)));
-%     LOSS(epoch,5) = lossB;
-%     LOSS(epoch,1:5)
+
     fprintf('epoch %d: loss = %e\n', epoch, loss);
     if(mod(epoch,500)==0 || epoch==5)
         fname = strcat('Saved/',strcat(num2str(epoch),'STD20_RBD_r55.mat'));
