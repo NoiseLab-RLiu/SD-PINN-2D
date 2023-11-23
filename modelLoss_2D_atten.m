@@ -2,9 +2,6 @@ function [loss,lossF,lossU,lossS,lossB,LAM1,LAM2,gradients,debugx,debugy,debug] 
 % % Make predictions with the initial conditions.
 U = model_2D(parameters,X,Y,T,numParams);
 % Calculate derivatives with respect to X and T.
-% X = XYT(1,:);
-% Y = XYT(2,:);
-% T = XYT(3,:);
 gradientsU = dlgradient(sum(U,"all"),{X,Y,T},EnableHigherDerivatives=true);
 Ut = gradientsU{3};
 %Calculate second-order derivatives with respect to X.
