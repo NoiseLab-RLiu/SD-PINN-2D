@@ -154,7 +154,7 @@ for epoch = 1:numEpochs
         Y = XYT(2,:);
         T = XYT(3,:);
 
-       [loss,lossF,lossU,lossS,lossB,LAM1,LAM2,gradients,vU,PDEterms] = dlfeval(accfun,parameters,X,Y,T,X0,Y0,T0,U0,lenT,C,ALPHA,Weight,addon,numParams);
+       [loss,lossF,lossU,lossS,lossB,LAM1,LAM2,gradients] = dlfeval(accfun,parameters,X,Y,T,X0,Y0,T0,U0,lenT,C,ALPHA,Weight,addon,numParams);
         % Update the network parameters using the adamupdate function.
         [parameters,averageGrad,averageSqGrad] = adamupdate(parameters,gradients,averageGrad, ...
             averageSqGrad,iteration,learningRate);    
