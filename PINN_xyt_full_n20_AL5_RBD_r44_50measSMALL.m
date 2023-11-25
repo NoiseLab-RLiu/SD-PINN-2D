@@ -177,3 +177,26 @@ for epoch = 1:numEpochs
     end
     toc
 end
+
+%%
+figure
+subplot(2,2,1)
+imagesc(-C.^2)
+axis square
+colorbar
+title('True -c^2')
+subplot(2,2,2)
+imagesc(extractdata(gather(LAM1)))
+axis square
+colorbar
+title('Recovered -c^2')
+subplot(2,2,3)
+imagesc(ALPHA)
+axis square
+colorbar
+title('True alpha')
+subplot(2,2,4)
+imagesc(extractdata(gather(LAM2)))
+axis square
+colorbar
+title('Recovered alpha')
