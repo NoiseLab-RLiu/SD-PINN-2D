@@ -12,7 +12,8 @@ Utt = dlgradient(sum(Ut,"all"),T,EnableHigherDerivatives=true);
 % Calculate lossF
 LAM1 = parameters.Umat1*parameters.Vmat1;
 LAM2 = parameters.Umat2*parameters.Vmat2;
-f = Utt +repmat(reshape(LAM1,1,size(LAM1,1)*size(LAM1,2)),1,lenT).*(Uxx+Uyy)+repmat(reshape(LAM2,1,size(LAM2,1)*size(LAM2,2)),1,lenT).*Ut; 
+[m,n] = size(LAM1);
+f = Utt +repmat(reshape(LAM1,1,m*n),1,lenT).*(Uxx+Uyy)+repmat(reshape(LAM2,1,m*n),1,lenT).*Ut; 
 
 zeroTarget = zeros(size(f), "like", f);
 lossF = mse(f, zeroTarget);
